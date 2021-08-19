@@ -1,17 +1,20 @@
 package ru.gb.pugacheva.spring7.springdata.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.pugacheva.spring7.springdata.dtos.ProductDto;
 import ru.gb.pugacheva.spring7.springdata.model.Product;
 import ru.gb.pugacheva.spring7.springdata.services.ProductService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
+    private final int PAGESIZE = 10;
 
     @GetMapping("/products/{id}")
     public ProductDto findProductById(@PathVariable Long id) {
@@ -19,9 +22,18 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<Product> findAll() {
-        return productService.findAll();
+    public Page<ProductDto> findAll(@RequestParam(defaultValue = "1", name = "page") int pageIndex) {
+        if (pageIndex < 1) {
+            pageIndex = 1;
+        }
+        return productService.findAll(pageIndex - 1, PAGESIZE).map(ProductDto::new);
     }
+
+//    //старый вариант, когда возвращали весь лист продуктов, а не по листам.
+//    @GetMapping("/products")
+//    public List<ProductDto> findAll(){
+//        return productService.findAll().stream().map(ProductDto::new).collect(Collectors.toList());
+//    }
 
     @PostMapping("/products")
     public void saveNewProduct(@RequestBody ProductDto productDto) {
@@ -31,8 +43,13 @@ public class ProductController {
         productService.saveNewProduct(product);
     }
 
-    @GetMapping("/products/delete/{id}")
-    public void deleteProductById(@PathVariable Long id) {
+//    @GetMapping("/products/delete/{id}") //cтарый вариант через запрос из строки браузера
+//    public void deleteProductById(@PathVariable Long id) {
+//        productService.deleteProductById(id);
+//    }
+
+    @GetMapping("/products/delete")
+    public void deleteProductById(@RequestParam Long id) {
         productService.deleteProductById(id);
     }
 

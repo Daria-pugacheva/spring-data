@@ -1,6 +1,8 @@
 package ru.gb.pugacheva.spring7.springdata.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.gb.pugacheva.spring7.springdata.model.Product;
 import ru.gb.pugacheva.spring7.springdata.repositories.ProductRepository;
@@ -17,9 +19,14 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public Page<Product> findAll(int pageNumber, int pageSize) {
+        return productRepository.findAll(PageRequest.of(pageNumber, pageSize));
     }
+
+//    //старый вариант, когда возвращали весь лист продуктов
+//    public List<Product> findAll() {
+//        return productRepository.findAll();
+//    }
 
     public void saveNewProduct(Product product) {
         productRepository.save(product);
