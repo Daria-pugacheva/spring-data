@@ -23,11 +23,6 @@ public class ProductService {
         return productRepository.findAll(PageRequest.of(pageNumber, pageSize));
     }
 
-//    //старый вариант, когда возвращали весь лист продуктов
-//    public List<Product> findAll() {
-//        return productRepository.findAll();
-//    }
-
     public void saveNewProduct(Product product) {
         productRepository.save(product);
     }
@@ -35,6 +30,15 @@ public class ProductService {
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
     }
+
+    public void updateProduct (Product product){
+        productRepository.updateProduct(product.getId(), product.getTitle(),product.getPrice());
+    }
+
+//    //вариант , когда через реквестпарамы работаем, но тоже не работает
+//    public void updateProduct (Long id, String title,int price){
+//        productRepository.updateProduct(id, title,price);
+//    }
 
     public List<Product> findAllByPriceLessThanMax(int maxPrice) {
         return productRepository.findAllByPriceLessThanEqual(maxPrice);
@@ -49,3 +53,9 @@ public class ProductService {
     }
 
 }
+
+
+//    //старый вариант, когда возвращали весь лист продуктов
+//    public List<Product> findAll() {
+//        return productRepository.findAll();
+//    }

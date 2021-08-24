@@ -32,7 +32,7 @@
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
             <td>
-                <button class="btn btn-primary" ng-click="deleteProduct(p.id, productsPage.number + 1)">Удалить</button>
+                <button class="btn btn-primary" ng-click="deleteProduct(p.id)">Удалить</button>
             </td>
         </tr>
         </tbody>
@@ -43,6 +43,26 @@
         <button class="btn btn-primary" ng-click="loadNextPage(productsPage.number + 1)">Следующая страница</button>
         <button class="btn btn-primary" ng-click="loadProducts()">Вернуться в начало списка</button>
     </span>
-</div>
+    <p></p>
+    <h3>Добавить новый продукт</h3>
+    <form novalidate ng-submit="createNewProduct()">
+        <input class="form-control" type="text" placeholder="Название" ng-model="new_product.title">
+        <p></p>
+        <input class="form-control" type="number" placeholder="Цена" ng-model="new_product.price">
+        <p></p>
+        <button type="submit" class="btn btn-primary" >Создать</button>
+    </form>
+    <h3>Обновить сведения о продукте</h3>
+    <form novalidate ng-submit="updateProduct()">
+        <input class="form-control" type="number" placeholder="Введите текущий ID изменяемого продукта" ng-model="updated_product.id">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Новое название" ng-model="updated_product.title">
+        <p></p>
+        <input class="form-control" type="number" placeholder="Новая цена" ng-model="updated_product.price">
+        <p></p>
+        <button type="submit" class="btn btn-primary" >Обновить</button>
+    </form>
+
+    </div>
 </body>
 </html>
