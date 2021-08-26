@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.gb.pugacheva.spring7.springdata.model.Product;
 import ru.gb.pugacheva.spring7.springdata.repositories.ProductRepository;
 
@@ -31,6 +32,7 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    @Transactional
     public void updateProduct (Product product){
         productRepository.updateProduct(product.getId(), product.getTitle(),product.getPrice());
     }
