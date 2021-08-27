@@ -11,58 +11,38 @@
             crossorigin="anonymous"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-    <script src="index.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
+
 </head>
 
 <body ng-app="market-front">
-<div class="container" ng-controller="indexController">
-    <h1>Таблица товаров</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <td>id</td>
-            <td>title</td>
-            <td>price</td>
-            <td>action</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat='p in productsPage.content'>
-            <td>{{p.id}}</td>
-            <td>{{p.title}}</td>
-            <td>{{p.price}}</td>
-            <td>
-                <button class="btn btn-primary" ng-click="deleteProduct(p.id)">Удалить</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <span>
-        <button class="btn btn-primary"
-                ng-click="loadPreviousPage(productsPage.number + 1)">Предыдущая страница</button>
-        <button class="btn btn-primary" ng-click="loadNextPage(productsPage.number + 1)">Следующая страница</button>
-        <button class="btn btn-primary" ng-click="loadProducts()">Вернуться в начало списка</button>
-    </span>
-    <p></p>
-    <h3>Добавить новый продукт</h3>
-    <form novalidate ng-submit="createNewProduct()">
-        <input class="form-control" type="text" placeholder="Название" ng-model="new_product.title">
-        <p></p>
-        <input class="form-control" type="number" placeholder="Цена" ng-model="new_product.price">
-        <p></p>
-        <button type="submit" class="btn btn-primary" >Создать</button>
-    </form>
-    <h3>Обновить сведения о продукте</h3>
-    <form novalidate ng-submit="updateProduct()">
-        <input class="form-control" type="number" placeholder="Введите текущий ID изменяемого продукта" ng-model="updated_product.id">
-        <p></p>
-        <input class="form-control" type="text" placeholder="Новое название" ng-model="updated_product.title">
-        <p></p>
-        <input class="form-control" type="number" placeholder="Новая цена" ng-model="updated_product.price">
-        <p></p>
-        <button type="submit" class="btn btn-primary" >Обновить</button>
-    </form>
-
+<div class="container">
+    <div ng-controller="indexController">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!/" style="...">Welcome</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!/store" style="...">Каталог товаров</a>
+                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="#!/order" style="...">Корзина</a>-->
+<!--                    </li>-->
+                </ul>
+            </div>
+        </nav>
     </div>
+
+    <ng-view></ng-view>
+
+    <script src="index.js"></script>
+    <script src="store/store.js"></script>
+    <script src="welcome/welcome.js"></script>
+    <script src="edit_product/edit_product.js"></script>
+<!--    <script src="order/order.js"></script>-->
+
+</div>
 </body>
 </html>

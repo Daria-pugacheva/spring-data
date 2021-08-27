@@ -18,7 +18,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findAllByPriceBetween(int minPrice, int maxPrice);
 
-    @Modifying
-    @Query("update Product p set p.title = :title, p.price = :price where p.id = :id")
-    void updateProduct(@Param("id") Long id, @Param("title") String title, @Param("price") int price);
 }
+
+
+////мой изначальный так себе вариант обновления инфо о продукте
+//    @Modifying
+//    @Query("update Product p set p.title = :title, p.price = :price where p.id = :id")
+//    void updateProduct(@Param("id") Long id, @Param("title") String title, @Param("price") int price);

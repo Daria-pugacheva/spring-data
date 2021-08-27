@@ -38,6 +38,11 @@ public class ProductController {
         return productService.findAll(pageIndex - 1, PAGESIZE).map(ProductDto::new);
     }
 
+//    @GetMapping("/order/{productId}")
+//    public List <ProductDto> sendOrderInfo (@PathVariable Long productId){
+//        return productService.addProductInOrder(productId);
+//    }
+
     @PostMapping()
     public void saveNewProduct(@RequestBody ProductDto productDto) {
         Product product = new Product();
@@ -51,22 +56,10 @@ public class ProductController {
         productService.deleteProductById(id);
     }
 
-    @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void updateProduct(@RequestBody ProductDto productDto) {
-        if(!productService.findProductById(productDto.getId()).isPresent()){
-            throw new ResourceNotFoundException("Product id= " + productDto.getId() + " not found");
-        } // ВОПРОС: можно ведь так прокинуть исключение?
-        Product productForUpdate = new Product();
-        productForUpdate.setId(productDto.getId());
-        productForUpdate.setTitle(productDto.getTitle());
-        productForUpdate.setPrice(productDto.getPrice());
-        productService.updateProduct(productForUpdate);
+    @PutMapping()
+    public void updateProduct (@RequestBody ProductDto productDto){
+        productService.updateProductFromDto(productDto);
     }
-//    //вариант обновления через реквестПарамы, но тоже не работает
-//    @PutMapping
-//    public void updateProduct(@RequestParam Long id, @RequestParam String title, @RequestParam int price) {
-//        productService.updateProduct(id,title,price);
-//    }
 
     @ExceptionHandler
     public ResponseEntity<?> catchResourceNotFoundException (ResourceNotFoundException e){
@@ -105,5 +98,23 @@ public class ProductController {
 //    @GetMapping("/products/delete")
 //    public void deleteProductById(@RequestParam Long id) {
 //        productService.deleteProductById(id);
+//    }
+
+//    //мой изначальный так себе вариант обновления инфо о продукте
+//    @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
+//    public void updateProduct(@RequestBody ProductDto productDto) {
+//        if(!productService.findProductById(productDto.getId()).isPresent()){
+//            throw new ResourceNotFoundException("Product id= " + productDto.getId() + " not found");
+//        } // ВОПРОС: можно ведь так прокинуть исключение?
+//        Product productForUpdate = new Product();
+//        productForUpdate.setId(productDto.getId());
+//        productForUpdate.setTitle(productDto.getTitle());
+//        productForUpdate.setPrice(productDto.getPrice());
+//        productService.updateProduct(productForUpdate);
+//    }
+//    //вариант обновления через реквестПарамы, но тоже не работает
+//    @PutMapping
+//    public void updateProduct(@RequestParam Long id, @RequestParam String title, @RequestParam int price) {
+//        productService.updateProduct(id,title,price);
 //    }
 

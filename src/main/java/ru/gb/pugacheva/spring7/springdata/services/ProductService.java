@@ -5,9 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.gb.pugacheva.spring7.springdata.dtos.ProductDto;
+import ru.gb.pugacheva.spring7.springdata.exceptions.ResourceNotFoundException;
 import ru.gb.pugacheva.spring7.springdata.model.Product;
 import ru.gb.pugacheva.spring7.springdata.repositories.ProductRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private List <ProductDto> order = new ArrayList<>();
 
     public Optional<Product> findProductById(Long id) {
         return productRepository.findById(id);
@@ -33,14 +37,11 @@ public class ProductService {
     }
 
     @Transactional
-    public void updateProduct (Product product){
-        productRepository.updateProduct(product.getId(), product.getTitle(),product.getPrice());
+    public void updateProductFromDto (ProductDto productDto) {
+        Product product = findProductById(productDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Product id= " + productDto.getId() + " not found"));
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
     }
-
-//    //вариант , когда через реквестпарамы работаем, но тоже не работает
-//    public void updateProduct (Long id, String title,int price){
-//        productRepository.updateProduct(id, title,price);
-//    }
 
     public List<Product> findAllByPriceLessThanMax(int maxPrice) {
         return productRepository.findAllByPriceLessThanEqual(maxPrice);
@@ -54,6 +55,11 @@ public class ProductService {
         return productRepository.findAllByPriceBetween(minPrice, maxPrice);
     }
 
+//    public List <ProductDto> addProductInOrder (Long id){
+//        order.add(new ProductDto(findProductById(id).get()));
+//        return order;
+//    }
+
 }
 
 
@@ -61,3 +67,15 @@ public class ProductService {
 //    public List<Product> findAll() {
 //        return productRepository.findAll();
 //    }
+
+////мой изначальный так себе вариант обновления инфо о продукте
+//    @Transactional
+//    public void updateProduct (Product product){
+//        productRepository.updateProduct(product.getId(), product.getTitle(),product.getPrice());
+//    }
+
+//    //вариант , когда через реквестпарамы работаем, но тоже не работает
+//    public void updateProduct (Long id, String title,int price){
+//        productRepository.updateProduct(id, title,price);
+//    }
+
