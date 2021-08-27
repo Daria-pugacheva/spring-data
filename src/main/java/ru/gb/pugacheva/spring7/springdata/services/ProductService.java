@@ -55,10 +55,15 @@ public class ProductService {
         return productRepository.findAllByPriceBetween(minPrice, maxPrice);
     }
 
-//    public List <ProductDto> addProductInOrder (Long id){
-//        order.add(new ProductDto(findProductById(id).get()));
+    public List <ProductDto> addProductInOrder (Long productId){
+//        order.add(new ProductDto(findProductById(productId).get()));
 //        return order;
-//    }
+        List <ProductDto> orderTest = new ArrayList<>();
+        ProductDto productDto1 = new ProductDto(findProductById(1L).get());
+        ProductDto productDto2 = new ProductDto(findProductById(2L).get());
+        orderTest.add(productDto1);
+        return orderTest;
+    }
 
 }
 

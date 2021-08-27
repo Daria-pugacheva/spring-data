@@ -38,10 +38,10 @@ public class ProductController {
         return productService.findAll(pageIndex - 1, PAGESIZE).map(ProductDto::new);
     }
 
-//    @GetMapping("/order/{productId}")
-//    public List <ProductDto> sendOrderInfo (@PathVariable Long productId){
-//        return productService.addProductInOrder(productId);
-//    }
+    @GetMapping("/order/{productId}")
+    public List <ProductDto> sendOrderInfo (@PathVariable Long productId){
+        return productService.addProductInOrder(productId);
+    }
 
     @PostMapping()
     public void saveNewProduct(@RequestBody ProductDto productDto) {

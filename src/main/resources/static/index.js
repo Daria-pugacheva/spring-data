@@ -18,10 +18,10 @@
                 templateUrl: 'edit_product/edit_product.html',
                 controller: 'editProductController'
             })
-            // .when('/order/:orderPage', {
-            //     templateUrl: 'order/order.html',
-            //     controller: 'orderController'
-            // })
+            .when('/order/:productId', {
+                templateUrl: 'order/order.html',
+                controller: 'orderController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
