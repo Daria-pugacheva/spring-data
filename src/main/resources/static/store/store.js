@@ -36,22 +36,14 @@ angular.module('market-front').controller('storeController', function ($scope, $
             });
     };
 
-    // //Запрос на бэкэнд добавления товара в корзину
-    // $scope.fillOrder = function (id) {
-    //     $http.get(contextPath + 'api/v1/products/order/' + id)
-    //         .then(function (response) {
-    //             $scope.orderPage = response.data;
-    //             $location.path('/order/' + $scope.orderPage);
-    //         });
-    // };
-
-
-    $scope.goToOrderPage=function (productId){
-        $location.path('/order/'+ productId);
-    }
-
+    //Запрос на бэкэнд добавления товара в корзину
+    $scope.fillOrderAndGoToOrderPage=function (productId){
+        $http.get(contextPath + 'api/v1/products/order/' + productId)
+                .then(function (response) {
+                    $location.path('/order');
+                });
+    };
 
     $scope.loadProducts();
-
 
 });

@@ -55,16 +55,14 @@ public class ProductService {
         return productRepository.findAllByPriceBetween(minPrice, maxPrice);
     }
 
-    public List <ProductDto> addProductInOrder (Long productId){
-//        order.add(new ProductDto(findProductById(productId).get()));
-//        return order;
-        List <ProductDto> orderTest = new ArrayList<>();
-        ProductDto productDto1 = new ProductDto(findProductById(1L).get());
-        ProductDto productDto2 = new ProductDto(findProductById(2L).get());
-        orderTest.add(productDto1);
-        return orderTest;
+    public void addProductInOrder (Long productId){
+        order.add(new ProductDto(findProductById(productId).get()));
+        System.out.println("в заказ добавлен продукт с Id  " + productId);
     }
 
+    public List <ProductDto> sendOrderInfo (){
+        return order;
+    }
 }
 
 
@@ -82,5 +80,11 @@ public class ProductService {
 //    //вариант , когда через реквестпарамы работаем, но тоже не работает
 //    public void updateProduct (Long id, String title,int price){
 //        productRepository.updateProduct(id, title,price);
+//    }
+
+// был вариант метода, когда с листа заказа добавляли товар и сразу отправляли ответом листо товаров в заказе
+//    public List <ProductDto> addProductInOrder (Long productId){
+//        order.add(new ProductDto(findProductById(productId).get()));
+//        return order;
 //    }
 

@@ -39,8 +39,12 @@ public class ProductController {
     }
 
     @GetMapping("/order/{productId}")
-    public List <ProductDto> sendOrderInfo (@PathVariable Long productId){
-        return productService.addProductInOrder(productId);
+    public void addProductInOrder (@PathVariable Long productId){
+        productService.addProductInOrder(productId);
+    }
+    @GetMapping("/orderInfo")
+    public List <ProductDto> sendOrderInfo (){
+        return productService.sendOrderInfo();
     }
 
     @PostMapping()
@@ -83,6 +87,7 @@ public class ProductController {
 
 }
 
+//АРХИВЫ ДОМАШЕК
 
 //    //старый вариант, когда возвращали весь лист продуктов, а не по листам.
 //    @GetMapping("/products")
@@ -116,5 +121,12 @@ public class ProductController {
 //    @PutMapping
 //    public void updateProduct(@RequestParam Long id, @RequestParam String title, @RequestParam int price) {
 //        productService.updateProduct(id,title,price);
+//    },,
+
+// был вариант метода, когда когда с листа заказа добавляли товар и сразу отправляли ответом список товаров в заказе
+//    @GetMapping("/order/{productId}")
+//    public List <ProductDto> sendOrderInfo (@PathVariable Long productId){
+//        System.out.println("сервер получил id " + productId);
+//        return productService.addProductInOrder(productId);
 //    }
 
